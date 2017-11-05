@@ -4,6 +4,8 @@ var initial = 18000;
 var count = initial;
 var counter;
 var allowedToScore = false;
+var timeforp1 = new Date();
+var timeforp2 = new Date();
 var numBouts = $('#boutInput').val();
 var audio = new Audio("res/beep.mp3")
 
@@ -79,15 +81,41 @@ $('#boutInput').on('change', function() {
     console.log(numBouts);
 });
 
+function checkForDoubleTouch(player, timeForPlayer) {
+    if(player == "p1") {
+        if(Math.abs(timeForPlayer - getTimeForp2()) < 100) {
+            return true;
+        }
+    }
+    if(player == "p2") {
+        if(Math.abs(timeForPlayer - getTimeForp1()) < 100) {
+            return true;
+        }
+    }
+}
+
+function getTimeForp2() {
+    return timeforp2;
+}
+
+function getTimeForp1() {
+    return timeforp1;
+}
+
 displayCount(initial);
 
 var ws1 = new WebSocket("ws://10.42.0.38:5678/"),
 messages1 = document.createElement('ul');
 ws1.onmessage = function (event) {
-    timeforp1 = Date.parse(String(event.data).substring(4, 30));
+    timeforp1 = Date.parse(String(event.data).substring(0, 27));
+    console.log("timep1: " + timeforp1);    
     if(allowedToScore) {
-        if(String(event.data).substr(31) == '1') {
+        if(String(event.data).substr(27) == '1') {
             audio.play();
+            if(checkForDoubleTouch("p1", timeforp1) == true) {
+                scorep2 = scorep2 + 1;
+                document.getElementById("scorep2").innerHTML = "Score P2: " + scorep2;                
+            }
             scorep1 = scorep1 + 1;
             document.getElementById("scorep1").innerHTML = "Score P1: " + scorep1; 
             $("#p1Light").css('background-color', 'green');           
@@ -104,10 +132,15 @@ ws1.onmessage = function (event) {
 var ws2 = new WebSocket("ws://10.42.0.38:5679/"),
 messages2 = document.createElement('ul');
 ws2.onmessage = function (event) {
-    timeforp2 = Date.parse(String(event.data).substring(4, 30));
+    timeforp2 = Date.parse(String(event.data).substring(0, 27));
+    console.log("timep2: " + timeforp2);
     if(allowedToScore) {
-        if(String(event.data).substr(31) == '1') {
+        if(String(event.data).substr(27) == '1') {
             audio.play();
+            if(checkForDoubleTouch("p2", timeforp2) == true) {
+                scorep1 = scorep1 + 1;
+                document.getElementById("scorep1").innerHTML = "Score P1: " + scorep1;                
+            }            
             scorep2 = scorep2 + 1;
             document.getElementById("scorep2").innerHTML = "Score P2: " + scorep2;
             $("#p2Light").css('background-color', 'red');                       
