@@ -16,6 +16,33 @@ function timer() {
     displayCount(count);
 }
 
+
+$(document).keypress(function(e) {
+    if(e.which === 122) {
+        clearInterval(counter);
+        allowedToScore = true;
+        counter = setInterval(timer, 10);
+        $("#p1Light").css('background-color', 'gray'); 
+        $("#p2Light").css('background-color', 'gray');   
+    }
+    if(e.which === 120) {
+        allowedToScore = false;
+        clearInterval(counter);
+    }
+    if(e.which === 099) {
+        allowedToScore = false;
+        clearInterval(counter);
+        count = initial;
+        displayCount(count); 
+        scorep1 = 0;
+        scorep2 = 0;
+        document.getElementById("scorep1").innerHTML = "Score P1: " + scorep1;
+        document.getElementById("scorep2").innerHTML = "Score P2: " + scorep2;
+        $("#p1Light").css('background-color', 'gray');
+        $("#p2Light").css('background-color', 'gray');   
+    }
+});
+
 function displayCount(count) {
     var res = count / 100;
     document.getElementById("timer").innerHTML = res.toPrecision(count.toString().length) + " seconds";
