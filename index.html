@@ -1,23 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <link rel="stylesheet" href="index.css">
         <script src="jquery-3.2.1.min.js"></script>
-        <title>WebSocket demo</title>
+        <script src="bootstrap.bundle.min.js"></script>
+        <title>WAFT</title>
     </head>
     <body>
-        <select name="weapon">
-            <option value="epee">Epee</option>
-            <option value="sabre">Sabre</option>
-            <option value="foil">Foil</option>
-        </select>
-        <p id="timer">0:00</p>
-        <input id="boutInput" type="number" name="numOfBout" min="1" step="1"/>
-    </br>
-        <button type="button" id="start">Start</button>
-        <button type="button" id="stop">Stop</button>
-        <button type="button" id="reset">Reset</button>
-        <p id="scorep1">Score P1: 0</p>
-        <p id="scorep2">Score P2: 0</p>
+        <div class="container-fluid text-center">
+            <h1>Wireless Appliance for Fencing Technology (WAFT)</h1>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <span class="h3">Weapon</span>
+                <div class="btn-group col" data-toggle="buttons">
+                    <label class="btn btn-primary active col-md-4">
+                        <input type="radio" name="options" id="option1" checked> Epee
+                    </label>
+                    <label class="btn btn-primary col-md-4">
+                        <input type="radio" name="options" id="option2"> Foil
+                    </label>
+                    <label class="btn btn-primary col-md-4">
+                        <input type="radio" name="options" id="option3"> Sabre
+                    </label>
+                </div>                                                   
+            </div>
+            <div class="col text-center">
+                <span class="h3">Number of Bouts</span> 
+                <input class="form-control" id="boutInput" type="number" name="numOfBout" value="5" min="1" step="1"/>
+            </div>
+        </div>
+        <p class="h1 font-weight-bold text-center" id="timer">0:00</p>
+        <div class="container text-center">
+            <div class="btn-group">
+                <div class="col">
+                    <button type="button" class="btn btn-success" id="start">Start</button>                        
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-danger" id="stop">Stop</button>                        
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-warning" id="reset">Reset</button>                        
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <span class="h1 col text-center" id="scorep1">Score P1: 0</span>
+            <span class="h1 col text-center" id="scorep2">Score P2: 0</span>
+        </div>
+        <div class="row">
+            <div class="col scoreLight" id="p1Light"></div> 
+            <div class="col scoreLight" id="p2Light"></div>     
+        </div>
         <script src="index.js"></script>
     </body>
 </html>
